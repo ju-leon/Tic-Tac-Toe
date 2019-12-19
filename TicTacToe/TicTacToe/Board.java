@@ -157,15 +157,9 @@ public class Board {
      * @param row the row to check
      */
     private void checkRow(int row) {
-        for (int i = 1; i < BOARD_WIDTH; i++) {
-            if (board[row][i] != board[row][i - 1]) {
-                break;
-            }
-            if (i == BOARD_WIDTH - 1) {
-                winner = playersTurn;
-                gameOver = true;
-            }
-        }
+
+        // TODO: Check from left to right in the given row.
+        //  Set gameOver = true, und winner = playersTurn if winner was found
     }
 
     /**
@@ -174,15 +168,10 @@ public class Board {
      * @param column the column to check
      */
     private void checkColumn(int column) {
-        for (int i = 1; i < BOARD_WIDTH; i++) {
-            if (board[i][column] != board[i - 1][column]) {
-                break;
-            }
-            if (i == BOARD_WIDTH - 1) {
-                winner = playersTurn;
-                gameOver = true;
-            }
-        }
+
+        // TODO: Check from top to bottom in the given column.
+        //  Set gameOver = true, und winner = playersTurn if winner was found
+
     }
 
     /**
@@ -192,17 +181,10 @@ public class Board {
      * @param y the y coordinate of the most recently played move
      */
     private void checkDiagonalFromTopLeft(int x, int y) {
-        if (x == y) {
-            for (int i = 1; i < BOARD_WIDTH; i++) {
-                if (board[i][i] != board[i - 1][i - 1]) {
-                    break;
-                }
-                if (i == BOARD_WIDTH - 1) {
-                    winner = playersTurn;
-                    gameOver = true;
-                }
-            }
-        }
+
+        // TODO: check diagonal.
+        //  Set gameOver = true, und winner = playersTurn if winner was found
+        //  Hint: Only the middle row has to be checked diagonally
     }
 
     /**
@@ -212,17 +194,9 @@ public class Board {
      * @param y the y coordinate of the most recently played move
      */
     private void checkDiagonalFromTopRight(int x, int y) {
-        if (BOARD_WIDTH - 1 - x == y) {
-            for (int i = 1; i < BOARD_WIDTH; i++) {
-                if (board[BOARD_WIDTH - 1 - i][i] != board[BOARD_WIDTH - i][i - 1]) {
-                    break;
-                }
-                if (i == BOARD_WIDTH - 1) {
-                    winner = playersTurn;
-                    gameOver = true;
-                }
-            }
-        }
+
+        // TODO: check diagonal. Set gameOver = true, und winner = playersTurn if winner was found
+        // TODO: Hint: Only the middle row has to be checked diagonally
     }
 
     /**
