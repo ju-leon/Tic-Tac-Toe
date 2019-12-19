@@ -80,7 +80,7 @@ public class Window extends JFrame {
     private void setWindowProperties() {
         setResizable(false);
         pack();
-        setTitle("Lazo's Tic Tac Toe");
+        setTitle("Tic Tac Toe");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
     }
