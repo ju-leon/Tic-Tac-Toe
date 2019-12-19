@@ -21,6 +21,7 @@ public class Window extends JFrame {
     private BufferedImage imageBackground, imageX, imageO;
 
     private enum Mode {Player, AI}
+
     private Mode mode;
 
     /**
@@ -38,15 +39,16 @@ public class Window extends JFrame {
     /**
      * Construct the Window.
      */
-    private Window () {
+    private Window() {
         this(Mode.AI);
     }
 
     /**
      * Construct the Window.
-     * @param mode      the game mode (Player vs. Player or Player vs. AI)
+     *
+     * @param mode the game mode (Player vs. Player or Player vs. AI)
      */
-    private Window (Mode mode) {
+    private Window(Mode mode) {
         this.mode = mode;
         board = new Board();
         loadCells();
@@ -58,7 +60,7 @@ public class Window extends JFrame {
     /**
      * Load the locations of the center of each of the cells.
      */
-    private void loadCells () {
+    private void loadCells() {
         cells = new Point[9];
 
         cells[0] = new Point(109, 109);
@@ -75,7 +77,7 @@ public class Window extends JFrame {
     /**
      * Set the size, title, visibility etc...
      */
-    private void setWindowProperties () {
+    private void setWindowProperties() {
         setResizable(false);
         pack();
         setTitle("Lazo's Tic Tac Toe");
@@ -85,9 +87,10 @@ public class Window extends JFrame {
 
     /**
      * Create the panel that will be used for drawing Tic Tac Toe to the screen.
-     * @return      the panel with the specified dimensions and mouse listener
+     *
+     * @return the panel with the specified dimensions and mouse listener
      */
-    private Panel createPanel () {
+    private Panel createPanel() {
         Panel panel = new Panel();
         Container cp = getContentPane();
         cp.add(panel);
@@ -99,7 +102,7 @@ public class Window extends JFrame {
     /**
      * Load the image of the background and the images of the X and O
      */
-    private void loadImages () {
+    private void loadImages() {
         imageBackground = getImage("background");
         imageX = getImage("x");
         imageO = getImage("o");
@@ -107,10 +110,11 @@ public class Window extends JFrame {
 
     /**
      * Helper method for grabbing the images from the disk.
-     * @param path      the name of the image
-     * @return          the image that was grabbed
+     *
+     * @param path the name of the image
+     * @return the image that was grabbed
      */
-    private static BufferedImage getImage (String path) {
+    private static BufferedImage getImage(String path) {
 
         BufferedImage image;
 
@@ -137,9 +141,10 @@ public class Window extends JFrame {
 
         /**
          * The main painting method that paints everything.
-         * @param g     the Graphics object that will perform the panting
+         *
+         * @param g the Graphics object that will perform the panting
          */
-        private void paintTicTacToe (Graphics2D g) {
+        private void paintTicTacToe(Graphics2D g) {
             setProperties(g);
             paintBoard(g);
             paintWinner(g);
@@ -147,9 +152,10 @@ public class Window extends JFrame {
 
         /**
          * Set the rendering hints of the Graphics object.
-         * @param g     the Graphics object to set the rendering hints on
+         *
+         * @param g the Graphics object to set the rendering hints on
          */
-        private void setProperties (Graphics2D g) {
+        private void setProperties(Graphics2D g) {
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                     RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -164,18 +170,19 @@ public class Window extends JFrame {
 
         /**
          * Paints the background image and the X's and O's.
-         * @param g     the Graphics object that will perform the panting
+         *
+         * @param g the Graphics object that will perform the panting
          */
-        private void paintBoard (Graphics2D g) {
-            Board.State[][] boardArray = board.toArray();
+        private void paintBoard(Graphics2D g) {
+            State[][] boardArray = board.toArray();
 
             int offset = 20;
 
             for (int y = 0; y < 3; y++) {
                 for (int x = 0; x < 3; x++) {
-                    if (boardArray[y][x] == Board.State.X) {
+                    if (boardArray[y][x] == State.X) {
                         g.drawImage(imageX, offset + 190 * x, offset + 190 * y, null);
-                    } else if (boardArray[y][x] == Board.State.O) {
+                    } else if (boardArray[y][x] == State.O) {
                         g.drawImage(imageO, offset + 190 * x, offset + 190 * y, null);
                     }
                 }
@@ -184,22 +191,23 @@ public class Window extends JFrame {
 
         /**
          * Paints who won to the screen.
-         * @param g     the Graphics object that will perform the panting
+         *
+         * @param g the Graphics object that will perform the panting
          */
-        private void paintWinner (Graphics2D g) {
+        private void paintWinner(Graphics2D g) {
             if (board.isGameOver()) {
                 g.setColor(new Color(255, 255, 255));
                 g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
 
                 String s;
 
-                if (board.getWinner() == Board.State.Blank) {
+                if (board.getWinner() == State.BLANK) {
                     s = "Draw";
                 } else {
                     s = board.getWinner() + " Wins!";
                 }
 
-                g.drawString(s, 300 - getFontMetrics(g.getFont()).stringWidth(s)/2, 315);
+                g.drawString(s, 300 - getFontMetrics(g.getFont()).stringWidth(s) / 2, 315);
 
             }
         }
@@ -224,9 +232,10 @@ public class Window extends JFrame {
 
         /**
          * Plays the move that the user clicks, if the move is valid.
-         * @param e     the MouseEvent that the user performed
+         *
+         * @param e the MouseEvent that the user performed
          */
-        private void playMove (MouseEvent e) {
+        private void playMove(MouseEvent e) {
             int move = getMove(e.getPoint());
 
             if (!board.isGameOver() && move != -1) {
@@ -240,10 +249,11 @@ public class Window extends JFrame {
 
         /**
          * Translate the mouse click position to an index on the board.
-         * @param point     the location of where the player pressed the mouse
-         * @return          the index on the Tic Tac Toe board (-1 if invalid click)
+         *
+         * @param point the location of where the player pressed the mouse
+         * @return the index on the Tic Tac Toe board (-1 if invalid click)
          */
-        private int getMove (Point point) {
+        private int getMove(Point point) {
             for (int i = 0; i < cells.length; i++) {
                 if (distance(cells[i], point) <= DISTANCE) {
                     return i;
@@ -255,18 +265,19 @@ public class Window extends JFrame {
         /**
          * Distance between two points. Used for determining if the player has pressed
          * on a cell to play a move.
-         * @param p1    the first point (intended to be the location of the cell)
-         * @param p2    the second point (intended to be the location of the mouse click)
-         * @return      the distance between the two points
+         *
+         * @param p1 the first point (intended to be the location of the cell)
+         * @param p2 the second point (intended to be the location of the mouse click)
+         * @return the distance between the two points
          */
-        private double distance (Point p1, Point p2) {
+        private double distance(Point p1, Point p2) {
             double xDiff = p1.getX() - p2.getX();
             double yDiff = p1.getY() - p2.getY();
 
-            double xDiffSquared = xDiff*xDiff;
-            double yDiffSquared = yDiff*yDiff;
+            double xDiffSquared = xDiff * xDiff;
+            double yDiffSquared = yDiff * yDiff;
 
-            return Math.sqrt(xDiffSquared+yDiffSquared);
+            return Math.sqrt(xDiffSquared + yDiffSquared);
         }
     }
 
